@@ -11,4 +11,7 @@ update student  set cgpa=8.62 where rollno=421;
 select * from student;
 select min(perc) from student;
 select max(perc) from student;
-
+select * from student order by perc desc;
+select rollno,perc+2 from student where rollno=420;
+update student set cgpa=9.8 where rollno=420;
+select * from student;
