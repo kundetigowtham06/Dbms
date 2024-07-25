@@ -15,3 +15,12 @@ select * from student order by perc desc;
 select rollno,perc+2 from student where rollno=420;
 update student set cgpa=9.8 where rollno=420;
 select * from student;
+select * from student where name like 'G%' or name like '%k';
+ALTER TABLE Student RENAME Column email TO gmail;
+select * from student;
+alter table student rename to student_details;
+select * from student_details;
+update student_details set cgpa=9.6 where rollno=422;
+select * from student_details;
+
+
