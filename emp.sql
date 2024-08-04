@@ -35,7 +35,7 @@ select count(*) as total from emp;
 --Display emp table with salary descending order
 select * from emp order by sal desc;
 --Display first five records in employee table.
-
+select * from emp where rownum<=5;
 -- Display all the records in emp table order by ascending deptno, descending salary.
 select * from emp order by sal desc,deptno asc;
 --Display all employees those who were joined in year 1981.
@@ -47,7 +47,7 @@ select * from emp where mgr in ('7698','7566') and sal>1500;
 --Display all employees where their salary is less then the Ford’s salary
 select * from emp where sal<(select sal from emp where ename='FORD');
 --Display all the records in EMP table along with the row ID.
-
+select rowId,emp.* from emp;
 -- Write a query to display current date.
 
 --Display distinct job from emp table.
@@ -59,5 +59,4 @@ select ename,dname from emp,dept where emp.deptno=dept.deptno and comm is not nu
 --Display the empno, ename, sal, and salary increased by 15%.
 select empno,ename,((sal*0.15)+sal) as salary from emp;
 --Display employee names and corresponding manager names
-
 
