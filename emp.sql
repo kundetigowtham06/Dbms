@@ -59,4 +59,23 @@ select ename,dname from emp,dept where emp.deptno=dept.deptno and comm is not nu
 --Display the empno, ename, sal, and salary increased by 15%.
 select empno,ename,((sal*0.15)+sal) as salary from emp;
 --Display employee names and corresponding manager names
-
+select e1.ename as employee,e2.ename as Manager from emp e1,emp e2 where e1.empno=e2.mgr;
+-- Display all the departments where employee salary greater than average salary of that department.
+select dname from dept where deptno in (select deptno from emp group by deptno having max(sal)>avg(sal));
+-- Display employees where length of ename is 5
+select * from emp where length(ename)=5;
+--Display all employees where ename start with J and ends with S
+select * from emp where ename like 'J%S';
+--Display all employees where employee does not belong to 10,20,40
+select * from emp where deptno not in (10,20,40);
+--Display all employees where jobs does not belong to PRESIDENT and MANAGER.
+select * from emp where job not in ('PRESIDENT','MANAGER');
+-- Display the maximum salary in the emp table
+select max(sal) from emp;
+-- Display average salary for job SALESMAN
+select avg(sal) from emp where job='SALESMAN';
+--Display all ename where first character could be anything, but second character should be L.
+select ename from emp where ename like '_L%';
+--Display nth highest and nth lowest salary in emp table.
+select max(sal),min(sal) from emp;
+--
