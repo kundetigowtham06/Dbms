@@ -45,7 +45,7 @@ select * from emp where hiredate like '%81';
 --Display the records in emp table where MGR in 7698,7566 and sal should be greater then 1500
 select * from emp where mgr in ('7698','7566') and sal>1500;
 --Display all employees where their salary is less then the Ford’s salary
-select * from emp where sal<(select sal from emp where ename='FORD');
+select * from emp where sal< any (select sal from emp where ename='FORD');
 --Display all the records in EMP table along with the row ID.
 select rowId,emp.* from emp;
 -- Write a query to display current date.
@@ -78,4 +78,22 @@ select avg(sal) from emp where job='SALESMAN';
 select ename from emp where ename like '_L%';
 --Display nth highest and nth lowest salary in emp table.
 select max(sal),min(sal) from emp;
---
+--Display all the departments where department has 3 employees.
+select dname from dept where deptno in (select deptno from emp group by deptno having count(*)=3);
+--Display sum of salary for each department. 
+select deptno,sum(sal) from emp group by deptno;
+--Display all department with Minimum salary and maximum salary?
+select deptno,max(sal),min(sal) from emp group by deptno order by deptno;
+--Display all ename, empno, dname, loc from emp, dept table.
+select emp.ename,emp.empno,dept.dname,dept.loc from emp natural join  dept;
+--Display all the departments where department does not have any employees
+select dname from dept where deptno in (select deptno from  dept minus select deptno from emp);
+--Display all the departments where department does have atleast one employee
+select dname from dept where deptno in (select deptno from  dept intersect select deptno from emp);
+--Display all employees those who are not managers.
+select * from emp where empno not in(select e1.empno from emp e1,emp e2 where e1.empno=e2.mgr);
+--Display ename, deptno from emp table with format of {ename} belongs to {deptno}
+select ename 
+--Display all the records in emp table. The ename should be lower case. The job first character should be upper case and rest of the character in job field should be lower case.
+select lower(ename),initcap(job) from emp e;
+
