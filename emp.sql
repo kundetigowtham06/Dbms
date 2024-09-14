@@ -95,5 +95,19 @@ select * from emp where empno not in(select e1.empno from emp e1,emp e2 where e1
 --Display ename, deptno from emp table with format of {ename} belongs to {deptno}
 select ename 
 --Display all the records in emp table. The ename should be lower case. The job first character should be upper case and rest of the character in job field should be lower case.
-select lower(ename),initcap(job) from emp e;
+select lower(ename),initcap(job) from emp ;
+--Create table emp1 and copy the emp table for deptno 10 while creating the table
+create table emp1 as select * from emp where deptno=10;
+select * from emp1;
+--Create table emp2 with same structure of emp table. Do not copy the data
+create table emp2(empno  number(4), ename varchar2(10), job varchar2(9), mgr number(4), hiredate date,
+sal number(7,2), comm number(7,2), deptno number(2), constraint pk_emp primary key (empno),
+constraint fk_deptno foreign key (deptno) references dept (deptno));
+--Display all the records for deptno which belongs to employee name JAMES.
+select * from emp where deptno in (select deptno from emp where ename='JAMES');
+--Display all the records in emp table where salary should be less than or equal to ADAMS salary.
+select * from emp where sal <=  (select sal from emp where ename='ADAMS');
+--Display all subordinate those who are working under BLAKE.
+select ename from emp where mgr in (select empno from emp where ename='BLAKE');
+--
 
