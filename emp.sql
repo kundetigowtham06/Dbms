@@ -93,7 +93,7 @@ select dname from dept where deptno in (select deptno from  dept intersect selec
 --Display all employees those who are not managers.
 select * from emp where empno not in(select e1.empno from emp e1,emp e2 where e1.empno=e2.mgr);
 --Display ename, deptno from emp table with format of {ename} belongs to {deptno}
-select ename,deptno from emp;
+select concat(concat(ename,' belongs to '),deptno)as Output from emp;
 --Display all the records in emp table. The ename should be lower case. The job first character should be upper case and rest of the character in job field should be lower case.
 select lower(ename),concat(upper(substr(job,1,1)),lower(substr(job,2))) as Job from emp;
 --Create table emp1 and copy the emp table for deptno 10 while creating the table
@@ -108,4 +108,28 @@ select * from emp where sal <=  (select sal from emp where ename='ADAMS');
 select ename from emp where mgr in (select empno from emp where ename='BLAKE');
 --Display who is making highest commission.
 select * from emp where comm = (select max(comm) from emp);
---
+--43) Display ename, sal, grade, dname, loc for each employee.
+select E.ename,E.sal,D.dname,D.loc from emp E natural join dept D;
+--44) Display all employee whose location is DALLAS.
+select * from emp natural join dept where loc='DALLAS';
+--45) Delete emp records for detpno 10 and 20.
+delete from emp where deptno=10 or deptno=20;
+select * from emp;
+--46) Delete all employees those are not getting any commission.
+delete from emp where comm is NULL;
+select * from emp;
+--Delete the employees where employee salary is greater than average salary of his/her department.
+delete from emp where sal>(select avg(sal) from emp group by deptno);
+select * from emp;
+--Rename the employee name JONES to ANDY
+update emp set ename='ANDY' where ename='JONES';
+select * from emp;
+--49) Increase the salary 5% for employee those who are earning commission less then 1000
+update emp set sal=((sal*0.05)+sal) where comm<1000;
+select * from emp;
+--Increase 100$ for employee who is making more then averge salary of his department.
+update emp set sal=(sal+100) where sal>(select avg(sal) from emp group by deptno);
+--99) Increase 1% salary for employee who is making lowest salary in dept 10
+update emp set sal=((sal*0.01)+sal) where sal=(select min(sal) from emp where deptno=10);
+--100) Increase commission 10$ for employees those who are located in NEW YORK.
+update emp set comm=(comm+10) where deptno in (select deptno from emp natural join dept where loc='NEW YORK');
